@@ -18,6 +18,14 @@ soc-detection-lab
 │   └── login-detection-rule.txt      ← KQL rule for brute-force detection
 └── screenshots                        ← evidence screenshots from SIEM / alerts
 ```
+## Lab Objective
+Simulate adversary techniques using Atomic Red Team and detect them using ELK SIEM with custom detection rules mapped to MITRE ATT&CK.
+
+## Architecture
+Host machine
+ELK server (dual-interface)
+FLARE VM attacker simulator
+Isolated VMnet1 detection subnet
 
 ## Detection Scenarios
 
