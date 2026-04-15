@@ -30,6 +30,7 @@ Isolated VMnet1 detection subnet
 ## Detection Scenarios
 
 | MITRE ID | Technique Name | Reference | Environment | Event IDs | Rule Status | Validation |
+| :--- | :--- | :---: | :--- | :--- | :--- | :--- |
 | T1059.001 | PowerShell fileless | #10 | Offline | ID 1, ID 13 | ✅ Rule written | ✅ Detected |
 
 ## Queries
