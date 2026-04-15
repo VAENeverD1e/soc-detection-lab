@@ -29,11 +29,8 @@ Isolated VMnet1 detection subnet
 
 ## Detection Scenarios
 
-| Scenario | Technique | MITRE ID |
-|---|---|---|
-| [PowerShell Execution](detection-scenarios/scenario1-powershell.md) | Command & Scripting Interpreter | T1059.001 |
-| [Brute-Force Login](detection-scenarios/scenario2-bruteforce.md) | Brute Force | T1110 |
-| [Persistence](detection-scenarios/scenario3-persistence.md) | Boot/Logon Autostart Execution | T1547 |
+| MITRE ID | Technique Name | Reference | Environment | Event IDs | Rule Status | Validation |
+| T1059.001 | PowerShell fileless | #10 | Offline | ID 1, ID 13 | ✅ Rule written | ✅ Detected |
 
 ## Queries
 
