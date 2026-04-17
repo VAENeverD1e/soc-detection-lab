@@ -32,10 +32,11 @@ Isolated VMnet1 detection subnet
 | MITRE ID | Technique Name | Reference | Environment | Event IDs | Rule Status | Validation |
 | :--- | :--- | :---: | :--- | :--- | :--- | :--- |
 | T1059.001 | PowerShell fileless | #10 | Offline | ID 1, ID 13 | ✅ Rule written | ✅ Detected |
+| T1003.001 | LSASS dump (LOLBin) | #1 | Offline | ID 10 | ✅ Rule written | ✅ Detected |
 
 ## Queries
 
-Detection rules are written in **KQL (Kusto Query Language)** and target **Microsoft Sentinel**.
+Detection rules are written in **KQL (Kibana Query Language)** and target **Elastic Security / ELK SIEM**.
 
 | Query file | Purpose |
 |---|---|
