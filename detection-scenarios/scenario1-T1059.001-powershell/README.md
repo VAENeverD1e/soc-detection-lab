@@ -45,7 +45,7 @@ process.name : ("powershell.exe" OR "pwsh.exe") AND (
 ```
 
 ## Evidence
-![Test execution](../../screenshots/scenario1-atomic-test-execution.png)
+![Test execution](../../screenshots/scenario1-evidence.png)
 ![Kibana Sysmon event](../../screenshots/scenario1-kibana-sysmon-event.png)
 ![ELK alert fired](../../screenshots/scenario1-elk-alert-fired.png)
 
