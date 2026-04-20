@@ -35,6 +35,7 @@ Isolated VMnet1 detection subnet
 | T1003.001 | LSASS dump (LOLBin) | #1 | Offline | ID 10 | ✅ Rule written | ✅ Detected |
 | T1547.001 | Registry Run key | #1 | Offline | ID 13 | ✅ Rule written | ✅ Detected |
 | T1053.005 | Scheduled task startup | #1 | Offline | ID 1 + Event 4698 | ✅ Rule written | ✅ Detected |
+| T1055.001  | DLL injection         | #1     | Internet | ID 1      | ✅ Written     | ✅ Detected |
 
 ## Queries
 
