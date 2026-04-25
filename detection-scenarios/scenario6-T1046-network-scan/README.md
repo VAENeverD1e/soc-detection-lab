@@ -25,10 +25,11 @@ Two tools were used: the Atomic Red Team Python port scanner
 Invoke-AtomicTest T1046 -TestNumbers 4 -InputArgs @{host_ip="192.168.75.11"}
 
 # Direct nmap scan for stronger Suricata signature
-nmap -sT -p 1-1024 192.168.75.11
+nmap -sS -p 1-1024 192.168.75.11
 ```
-Proof of execution: open ports on ELK server (9200, 5601, 22)
-returned by both tools.
+Proof of execution: open ports on ELK server returned by both tools,
+triggering multiple IDS signatures for targeted port probing (e.g.,
+ports 5432 and 3306).
 
 ## Why this scenario is unique — dual-layer detection
 This is the first scenario in the lab where the same attack is
@@ -48,9 +49,9 @@ This is defence-in-depth detection in practice.
 | Signal                    | Details                                       |
 |---------------------------|-----------------------------------------------|
 | Sysmon Event ID 1         | python.exe / nmap.exe with 192.168.75.11 arg  |
-| Suricata alert.signature  | ET SCAN signature from Emerging Threats rules |
-| src_ip                    | 192.168.75.10 (FLARE-VM attacker)             |
-| dest_ip                   | 192.168.75.11 (ELK server target)             |
+| rule.name                 | ET SCAN signature from Emerging Threats rules |
+| source_ip                 | 192.168.75.12 (FLARE-VM attacker)             |
+| destination_ip            | 192.168.75.11 (ELK server target)             |
 | ELK Alert                 | Rule fired within 5 min of scan               |
 
 ## Detection rule (KQL)
@@ -59,9 +60,9 @@ event.module: "suricata" AND
 event.kind: "alert" AND 
 rule.name: *SCAN*
 ```
+Detection Strategy Note: This rule is intentionally broad and omits source IP addresses. By focusing on the alert behavior (*SCAN*) rather than hardcoding a specific attacker subnet, the SIEM can successfully detect unauthorized network reconnaissance originating from any compromised host or rogue device across the environment.
 
 ## Evidence
-![ShowDetails — Windows test](../../screenshots/scenario6-showdetails-windows-test.png)
 ![Python scan execution](../../screenshots/scenario6-python-scan-execution.png)
 ![Dual-layer detection](../../screenshots/scenario6-dual-layer-detection.png)
 ![Suricata network alert](../../screenshots/scenario6-suricata-network-alert.png)
