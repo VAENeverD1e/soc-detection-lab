@@ -55,15 +55,15 @@ process.name: ("rundll32.exe" OR "mshta.exe" OR "regsvr32.exe" OR "mavinject.exe
 
 ### ✅ Confirmed malicious — Hunt 1a
 **rundll32.exe → comsvcs.dll → MiniDump on lsass.exe**
-- Timestamp: [Apr 17, 2026 @ 16:00:54.994]
+- Timestamp: Apr 17, 2026 @ 16:00:54.994
 - Command line: `rundll32.exe C:\Windows\System32\comsvcs.dll MiniDump [PID] [output] full`
-- Parent process: [powershell.exe]
+- Parent process: powershell.exe
 - Detection rule: T1003.001 rule already covers this — alert fired
 - Verdict: **Covered by existing detection**
 
 ### ✅ Confirmed malicious — Hunt 1b
 **mavinject.exe spawned by powershell.exe with /INJECTRUNNING**
-- Timestamp: [Apr 20, 2026 @ 15:51:49.636]
+- Timestamp: Apr 20, 2026 @ 15:51:49.636
 - Command line: `mavinject.exe [PID] /INJECTRUNNING [DLL path]`
 - Parent process: powershell.exe (NOT a legitimate App-V parent)
 - Detection rule: T1055.001 rule already covers this — alert fired
@@ -107,7 +107,7 @@ rules provide coverage. Future lab iterations should add:
 - T1140 (certutil.exe for decode/download)
 
 ## Time to hunt
-Approximately [45] minutes
+Approximately 45 minutes
 
 ## Evidence
 ![Hunt 1a — rundll32 finding](../screenshots/hunt1-1a-rundll32-comsvcs-finding.png)

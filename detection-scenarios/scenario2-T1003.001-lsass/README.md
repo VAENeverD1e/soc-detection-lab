@@ -23,7 +23,7 @@ that can be used offline for credential theft.
 Invoke-AtomicTest T1003.001 -TestNumbers 2
 ```
 Proof of execution: %TEMP%\lsass-comsvcs.dmp was created
-(file size: [50MB]).
+(file size: 50MB).
 
 ## Why this detection is powerful
 The ELK rule detects based on *process access behavior*, not file
