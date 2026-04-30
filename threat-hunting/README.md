@@ -86,7 +86,7 @@ If a hunt uncovers something a detection rule missed, a new rule is written or a
 |---|------|------------|--------------|---------|-------------|
 | H1 | [LOLBin Abuse](hunt1-lolbin-abuse.md) | Attacker used trusted Windows binaries to execute malicious actions | Sysmon ID 1 | **Confirmed** — rundll32+comsvcs (T1003.001) and mavinject (T1055.001) found in historical data | No new rule needed — existing rules covered both findings |
 | H2 | [LSASS Reconnaissance](hunt2-lsass-recon.md) | LSASS was accessed with masks or source processes not covered by the existing T1003.001 rule | Sysmon ID 10 | **Gap analysis complete** — svchost+0x1410 identified as benign false positive pattern | T1003.001 rule updated with svchost+0x1410 conditional exclusion |
-| H3 | [Persistence Audit](hunt3-persistence-audit.md) | Persistence artifacts (Run keys, scheduled tasks) may still be present post-cleanup | Sysmon ID 13, Windows Event 4698, live system check | _Fill in after completing Hunt 3_ | _Fill in_ |
+| H3 | [Persistence Audit](hunt3-persistence-audit.md) | Persistence artifacts (Run keys, scheduled tasks) may still be present post-cleanup | Sysmon ID 13, Windows Event 4698, live system check | **Clean** — full creation-to-deletion lifecycle captured in SIEM; remediation confirmed via snapshot audit trail | None — existing rules and telemetry cover both techniques |
 | H4 | [C2 Beaconing](hunt4-c2-beaconing.md) | A host may be beaconing to a C2 server via HTTP traffic with anomalous user agents or connection patterns | Suricata HTTP flows, Sysmon ID 3 | _Fill in after completing Hunt 4_ | _Fill in_ |
 
 ---
