@@ -117,10 +117,12 @@ soc-detection-lab/
 ├── queries/                           ← Exported KQL detection rules (.ndjson)
 │   ├── T1003.001-lsass-access.ndjson
 │   ├── T1046-network-scan-suricata.ndjson
+│   ├── T1047.001-run-key-persistence.ndjson
 │   ├── T1053.005-scheduled-task.ndjson
 │   ├── T1055.001-dll-injection.ndjson
 │   ├── T1059.001-encoded-powershell.ndjson
 │   └── T1071.001-malicious-user-agent.ndjson
+│   └── T1071.001-suspicious-script-egress.ndjson
 ├── threat-hunting/                    ← Proactive hunt reports and methodology
 │   ├── README.md
 │   ├── hunt1-lolbin-abuse.md

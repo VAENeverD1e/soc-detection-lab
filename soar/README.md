@@ -1,6 +1,6 @@
 # SOAR — ELK → Discord Alerter
 
-Polls Elastic Security every 60 seconds for new High/Critical
+Polls Elastic Security every 60 seconds for new Medium/High/Critical
 alerts and forwards them to Discord via webhook embed.
 
 ## Architecture

@@ -35,18 +35,25 @@ antivirus.
 ## Detection signals observed
 | Signal              | Details                                           |
 |---------------------|---------------------------------------------------|
-| Sysmon Event ID 10  | rundll32.exe → lsass.exe, GrantedAccess: [0x1fffff] |
+| Sysmon Event ID 10  | rundll32.exe → lsass.exe, GrantedAccess: 0x1fffff |
 | CallTrace           | comsvcs.dll visible in the call stack             |
 | ELK Alert           | Rule fired within 5 min of execution              |
 
 ## Detection rule (KQL)
 ```
-event.code: 10 AND
+event.code: "10" AND
 winlog.event_data.TargetImage: *lsass.exe AND
-winlog.event_data.GrantedAccess: (0x1fffff OR 0x1010 OR 0x1410 OR 0x143a) AND
-NOT winlog.event_data.SourceImage: *MsMpEng.exe AND
-NOT winlog.event_data.SourceImage: *elastic-agent.exe AND
-NOT winlog.event_data.SourceImage: *agentbeat.exe
+winlog.event_data.GrantedAccess: (
+"0x1fffff" OR "0x1010" OR "0x1410" OR "0x143a" OR "0x1438"
+) AND
+NOT process.name: (
+"MsMpEng.exe" OR "MsSense.exe" OR "SenseCncProxy.exe" OR
+"elastic-agent.exe" OR "agentbeat.exe" OR
+"csrss.exe" OR "wininit.exe" OR "lsass.exe"
+) AND
+NOT (process.name: "svchost.exe" AND winlog.event_data.GrantedAccess: "0x1410") AND
+NOT (process.name: "wmiprvse.exe" AND winlog.event_data.CallTrace: "cimwin32.dll") AND
+NOT (process.name: "taskmgr.exe" AND winlog.event_data.GrantedAccess: ("0x1010" OR "0x1410"))
 ```
 
 ## Evidence
