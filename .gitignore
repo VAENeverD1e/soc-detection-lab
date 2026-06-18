@@ -1,0 +1,23 @@
+# Environment variables and secrets
+.env
+.env.*
+*.pem
+*.key
+
+# AWS
+.aws/
+aws-credentials*
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/

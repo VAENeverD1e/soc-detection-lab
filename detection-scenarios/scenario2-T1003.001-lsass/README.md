@@ -52,7 +52,7 @@ NOT process.name: (
 "csrss.exe" OR "wininit.exe" OR "lsass.exe"
 ) AND
 NOT (process.name: "svchost.exe" AND winlog.event_data.GrantedAccess: "0x1410") AND
-NOT (process.name: "wmiprvse.exe" AND winlog.event_data.CallTrace: "cimwin32.dll") AND
+NOT (process.name: "wmiprvse.exe" AND winlog.event_data.CallTrace: "*cimwin32.dll*") AND
 NOT (process.name: "taskmgr.exe" AND winlog.event_data.GrantedAccess: ("0x1010" OR "0x1410"))
 ```
 

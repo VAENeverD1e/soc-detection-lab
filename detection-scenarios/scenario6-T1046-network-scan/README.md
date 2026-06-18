@@ -64,6 +64,7 @@ Detection Strategy Note: This rule is intentionally broad and omits source IP ad
 
 ## Evidence
 ![Python scan execution](../../screenshots/scenario6-python-scan-execution.png)
+![Nmap scan execution](../../screenshots/scenario6-nmap-scan-execution.png)
 ![Dual-layer detection](../../screenshots/scenario6-dual-layer-detection.png)
 ![Suricata network alert](../../screenshots/scenario6-suricata-network-alert.png)
 ![ELK alert fired](../../screenshots/scenario6-elk-alert-fired.png)
