@@ -1,0 +1,50 @@
+title: LSASS Memory Access
+id: 4547c554-2c13-40bc-8846-f02279905e69
+status: experimental
+description: Detects suspicious access to LSASS memory using access masks commonly associated with credential dumping tools (Mimikatz, ProcDump, comsvcs.dll MiniDump).
+author: Huy
+date: 2026/06/18
+references:
+    - https://attack.mitre.org/techniques/T1003/001/
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection_target:
+        TargetImage|endswith: '\lsass.exe'
+        GrantedAccess:
+            - '0x1fffff'
+            - '0x1010'
+            - '0x1410'
+            - '0x143a'
+            - '0x1438'
+    filter_known_good:
+        SourceImage|endswith:
+            - '\MsMpEng.exe'
+            - '\MsSense.exe'
+            - '\SenseCncProxy.exe'
+            - '\elastic-agent.exe'
+            - '\agentbeat.exe'
+            - '\csrss.exe'
+            - '\wininit.exe'
+            - '\lsass.exe'
+    filter_svchost:
+        SourceImage|endswith: '\svchost.exe'
+        GrantedAccess: '0x1410'
+    filter_wmi:
+        SourceImage|endswith: '\wmiprvse.exe'
+        CallTrace|contains: 'cimwin32.dll'
+    filter_taskmgr:
+        SourceImage|endswith: '\taskmgr.exe'
+        GrantedAccess:
+            - '0x1010'
+            - '0x1410'
+    condition: selection_target and not 1 of filter_*
+falsepositives:
+    - svchost.exe credential validation operations
+    - WMI queries via wmiprvse.exe
+    - Task Manager process inspection
+level: high
+tags:
+    - attack.credential_access
+    - attack.t1003.001

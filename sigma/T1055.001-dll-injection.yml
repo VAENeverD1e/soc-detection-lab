@@ -1,0 +1,28 @@
+title: DLL Injection via mavinject.exe
+id: f06537d8-aeb0-40e3-a7e5-3d2ac6f5b46a
+status: experimental
+description: Detects process injection via the legitimate Windows binary mavinject.exe using the /INJECTRUNNING flag, excluding legitimate App-V parent processes.
+author: Huy
+date: 2026/06/18
+references:
+    - https://attack.mitre.org/techniques/T1055/001/
+    - https://lolbas-project.github.io/lolbas/Binaries/Mavinject/
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\mavinject.exe'
+        CommandLine|contains: 'INJECTRUNNING'
+    filter_appv:
+        ParentImage|endswith:
+            - '\msiexec.exe'
+            - '\AppVClient.exe'
+    condition: selection and not filter_appv
+falsepositives:
+    - Legitimate Microsoft Application Virtualization (App-V) operations
+level: high
+tags:
+    - attack.defense_evasion
+    - attack.privilege_escalation
+    - attack.t1055.001

@@ -1,0 +1,30 @@
+title: Suspicious Script-Based Outbound Network Connection
+id: 108e4d58-bcb7-4a58-9ea0-b856ac36ff52
+status: experimental
+description: Detects outbound network connections initiated by scripting/command-line interpreters to commonly abused C2 ports.
+author: Huy
+date: 2026/06/18
+references:
+    - https://attack.mitre.org/techniques/T1071/001/
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith:
+            - '\powershell.exe'
+            - '\cmd.exe'
+            - '\wscript.exe'
+        Initiated: 'true'
+        DestinationPort:
+            - 8080
+            - 4444
+            - 8888
+            - 1337
+    condition: selection
+falsepositives:
+    - Legitimate scripts connecting to internal services on these ports
+level: high
+tags:
+    - attack.command_and_control
+    - attack.t1071.001

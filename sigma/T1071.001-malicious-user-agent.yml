@@ -1,0 +1,42 @@
+title: Malicious HTTP User Agent (C2 Beaconing)
+id: 6c945229-6d26-4858-89cb-6e8bc3b6adf2
+status: experimental
+description: Detects HTTP traffic using known-malicious or anomalous user agent strings associated with C2 frameworks, plus Suricata trojan/malware category alerts.
+author: Huy
+date: 2026/06/18
+references:
+    - https://attack.mitre.org/techniques/T1071/001/
+logsource:
+    product: suricata
+    category: alert
+detection:
+    selection_useragent:
+        event.module: 'suricata'
+        event.kind: 'alert'
+        network.protocol: 'http'
+        user_agent.original|contains:
+            - 'HttpBrowser'
+            - 'Wget/1.9+cvs'
+            - 'Opera/8.81'
+            - 'python-requests'
+            - 'Go-http-client'
+    selection_category:
+        rule.category:
+            - 'A Network Trojan was detected'
+            - 'Malware Command and Control Activity Detected'
+    selection_rulename:
+        rule.name|contains:
+            - 'MALWARE'
+            - 'Trojan'
+            - 'CnC'
+            - 'C2'
+            - 'Beacon'
+            - 'RAT'
+            - 'Backdoor'
+    condition: 1 of selection_*
+falsepositives:
+    - Legitimate automation tools using generic HTTP client user agents
+level: high
+tags:
+    - attack.command_and_control
+    - attack.t1071.001

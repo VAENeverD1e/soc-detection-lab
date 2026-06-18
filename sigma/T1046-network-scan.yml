@@ -1,0 +1,23 @@
+title: Network Service Discovery (Suricata)
+id: f9d568f5-4f75-4ded-8753-564643d5d760
+status: experimental
+description: Detects network scanning activity via Suricata Emerging Threats scan signatures.
+author: Huy
+date: 2026/06/18
+references:
+    - https://attack.mitre.org/techniques/T1046/
+logsource:
+    product: suricata
+    category: alert
+detection:
+    selection:
+        event.module: 'suricata'
+        event.kind: 'alert'
+        rule.name|contains: 'SCAN'
+    condition: selection
+falsepositives:
+    - Authorized vulnerability scanning or asset discovery tools
+level: medium
+tags:
+    - attack.discovery
+    - attack.t1046

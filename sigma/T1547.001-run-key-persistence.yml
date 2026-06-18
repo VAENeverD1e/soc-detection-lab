@@ -1,0 +1,28 @@
+title: Registry Run Key Persistence
+id: 691ebc64-fbb1-4728-b9b4-5442b6d7d69c
+status: experimental
+description: Detects modification of Windows Registry Run/RunOnce keys commonly abused for persistence, excluding known-good writers.
+author: Huy
+date: 2026/06/18
+references:
+    - https://attack.mitre.org/techniques/T1547/001/
+logsource:
+    category: registry_event
+    product: windows
+detection:
+    selection:
+        TargetObject|contains:
+            - '\CurrentVersion\Run\'
+            - '\CurrentVersion\RunOnce\'
+    filter_known_good:
+        Image|endswith:
+            - '\MsMpEng.exe'
+            - '\svchost.exe'
+            - '\OneDrive.exe'
+    condition: selection and not filter_known_good
+falsepositives:
+    - Legitimate software (OneDrive, Teams, security tools) registering startup entries
+level: medium
+tags:
+    - attack.persistence
+    - attack.t1547.001

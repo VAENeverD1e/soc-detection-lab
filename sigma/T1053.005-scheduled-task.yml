@@ -1,0 +1,31 @@
+title: Suspicious Scheduled Task Creation
+id: ecc7ff67-6011-4518-b73b-49be37ad6038
+status: experimental
+description: Detects creation of scheduled tasks with triggers commonly abused for persistence (onlogon, onstart, once, daily), excluding legitimate parent processes.
+author: Huy
+date: 2026/06/18
+references:
+    - https://attack.mitre.org/techniques/T1053/005/
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\schtasks.exe'
+        CommandLine|contains:
+            - 'onlogon'
+            - 'onstart'
+            - 'ONCE'
+            - 'DAILY'
+    filter_parent:
+        ParentImage|endswith:
+            - '\svchost.exe'
+            - '\taskhostw.exe'
+    condition: selection and not filter_parent
+falsepositives:
+    - Legitimate software installers registering update tasks
+level: high
+tags:
+    - attack.execution
+    - attack.persistence
+    - attack.t1053.005
