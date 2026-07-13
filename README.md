@@ -51,7 +51,7 @@ I engineered detections for seven distinct MITRE ATT&CK techniques, focusing on 
 | **T1055.001** | DLL Injection via `mavinject.exe` | Sysmon ID 1 | High | ✅ Engineered | [View Scenario](./detection-scenarios/scenario5-T1055.001-dll-injection/README.md) |
 | **T1046** | Network Service Discovery | Sysmon ID 1, Suricata IDS | Medium | ✅ Engineered | [View Scenario](./detection-scenarios/scenario6-T1046-network-scan/README.md) |
 | **T1071.001** | C2 Beaconing via Malicious HTTP User Agents | Sysmon ID 3, Suricata IDS | High | ✅ Engineered | [View Scenario](./detection-scenarios/scenario7-T1071.001-c2-beacon/README.md) |
-
+| **T1078.004** | Root Account Console Login | CloudTrail ConsoleLogin | Critical | ✅ Engineered | [View Scenario](./detection-scenarios/scenario8-T1078.004-root-login/README.md) |
 ---
 
 ## 🔎 Threat Hunting
@@ -113,6 +113,7 @@ soc-detection-lab/
 │   ├── scenario4-T1053.005-scheduled-task/
 │   ├── scenario5-T1055.001-dll-injection/
 │   ├── scenario6-T1046-network-scan/
+│   ├── scenario7-T1071.001-c2-beacon/
 │   └── scenario7-T1071.001-c2-beacon/
 ├── queries/                           ← Exported KQL detection rules (.ndjson)
 │   ├── T1003.001-lsass-access.ndjson
@@ -122,7 +123,8 @@ soc-detection-lab/
 │   ├── T1055.001-dll-injection.ndjson
 │   ├── T1059.001-encoded-powershell.ndjson
 │   ├── T1071.001-malicious-user-agent.ndjson
-│   └── T1071.001-suspicious-script-egress.ndjson
+│   ├── T1071.001-suspicious-script-egress.ndjson
+│   └── T1078.004-root-console-login.ndjson
 ├── threat-hunting/                    ← Proactive hunt reports and methodology
 │   ├── README.md
 │   ├── hunt1-lolbin-abuse.md
