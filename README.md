@@ -55,7 +55,7 @@ I engineered detections for seven distinct MITRE ATT&CK techniques, focusing on 
 | **T1078.004** | IAM Reconnaissance Burst | CloudTrail: ListUsers/ListRoles/GetAccountSummary burst | Medium | ✅ Engineered | [View Scenario](./detection-scenarios/scenario9-T1078.004-iam-recon/README.md) |
 | **T1098** | IAM Persistence (backdoor admin user) | CloudTrail: CreateUser → AttachUserPolicy → CreateAccessKey | High | ✅ Engineered | [View Scenario](./detection-scenarios/scenario10-T1098-iam-persistence/README.md) |
 | **T1530** | S3 Data Exfiltration (bulk download) | CloudTrail data event: GetObject burst (Threshold rule) | High | ✅ Engineered | [View Scenario](./detection-scenarios/scenario11-T1530-s3-exfiltration/README.md) |
-
+| **T1537** | S3 Bucket Made Public | CloudTrail: PutBucketPolicy (Principal: "*") | High | ✅ Engineered | [View Scenario](./detection-scenarios/scenario12-T1537-s3-public-bucket/README.md) |
 ---
 
 ## 🔎 Threat Hunting
