@@ -79,10 +79,10 @@ account.
 
 ## Cleanup
 ```powershell
-aws s3api delete-bucket-policy --bucket soclab-public-test-194343789465
+aws s3api delete-bucket-policy --bucket soclab-public-test-
 
 aws s3api put-public-access-block `
-  --bucket soclab-public-test-194343789465 `
+  --bucket soclab-public-test- `
   --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true
 
 # Verify closed:
