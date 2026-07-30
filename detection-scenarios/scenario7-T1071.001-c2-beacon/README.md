@@ -43,21 +43,13 @@ Invoke-AtomicTest T1071.001 -TestNumbers 1 -InputArgs @{domain="http://192.168.7
 Proof of execution: 4 HTTP GET requests from 192.168.75.10 visible
 in the Python HTTP server output on the ELK server.
 
-## Why Sysmon Event ID 3 (not ID 1)
-The test does not spawn a child process — PowerShell makes the web
-request directly using .NET's WebClient. This means no process
-creation event fires (Event ID 1). Event ID 3 (NetworkConnect)
-captures the outbound connection from the existing PowerShell process.
-This is an important real-world nuance: not all C2 techniques generate
-a process creation event, so relying solely on Event ID 1 would miss this.
-
 ## Detection signals observed
 | Signal                            | Details                                       |
 |-----------------------------------|-----------------------------------------------|
 | Suricata alert / HTTP flow        | Malicious user agent strings in HTTP headers  |
 | suricata.eve.http.http_user_agent | HttpBrowser/1.0, Wget/1.9+cvs, etc.           |
 | Sysmon Event ID 3                 | powershell.exe → 192.168.75.11:8080 outbound  |
-| ELK Alert                         | High severity rule fired within 5 min         |
+| ELK Alert                         | High severity rule fired within 2 mins         |
 
 ## Detection rule (KQL)
 ```
@@ -89,7 +81,7 @@ event.kind: "alert" AND
 > **Detected** — Suricata identified the malicious HTTP user agent
 > strings at the network level, and Sysmon Event ID 3 captured the
 > outbound PowerShell connection at the endpoint level. The custom
-> ELK rule generated a High severity alert within 5 minutes.
+> ELK rule generated a High severity alert within 2 minutes.
 
 ## Cleanup
 ```bash

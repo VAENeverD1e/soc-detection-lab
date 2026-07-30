@@ -29,7 +29,7 @@ containing "Hello from the Atomic Red Team".
 |--------------------|--------------------------------------------------|
 | Sysmon Event ID 1  | powershell.exe with FromBase64String in cmd line |
 | Sysmon Event ID 13 | Registry write to HKU\S-1-5-21-...-1001_Classes\mssharepointclient\shell\open\command\(Default)|
-| ELK Alert          | Rule fired within 5 min of execution             |
+| ELK Alert          | Rule fired within 1 min of execution             |
 
 ## Detection rule (KQL)
 ```
@@ -51,7 +51,7 @@ process.name : ("powershell.exe" OR "pwsh.exe") AND (
 
 ## Detection score
 > **Detected** — Sysmon logged the execution and the custom ELK rule
-> generated a High severity alert within 5 minutes.
+> generated a High severity alert within 1 minutes.
 
 ## References
 - https://attack.mitre.org/techniques/T1059/001/

@@ -47,7 +47,7 @@ I engineered detections for seven distinct MITRE ATT&CK techniques, focusing on 
 | **T1059.001** | PowerShell Fileless Execution | Sysmon ID 1, 13 | High | ✅ Engineered | [View Scenario](./detection-scenarios/scenario1-T1059.001-powershell/README.md) |
 | **T1003.001** | LSASS Dump via `comsvcs.dll` (LOLBin) | Sysmon ID 10 | High | ✅ Engineered | [View Scenario](./detection-scenarios/scenario2-T1003.001-lsass/README.md) |
 | **T1547.001** | Registry Run Key Persistence | Sysmon ID 13 | Medium | ✅ Engineered | [View Scenario](./detection-scenarios/scenario3-T1547.001-persistence/README.md) |
-| **T1053.005** | Scheduled Task Persistence | Sysmon ID 1, Win 4698 | High | ✅ Engineered | [View Scenario](./detection-scenarios/scenario4-T1053.005-scheduled-task/README.md) |
+| **T1053.005** | Scheduled Task Persistence | Sysmon ID 1 | High | ✅ Engineered | [View Scenario](./detection-scenarios/scenario4-T1053.005-scheduled-task/README.md) |
 | **T1055.001** | DLL Injection via `mavinject.exe` | Sysmon ID 1 | High | ✅ Engineered | [View Scenario](./detection-scenarios/scenario5-T1055.001-dll-injection/README.md) |
 | **T1046** | Network Service Discovery | Sysmon ID 1, Suricata IDS | Medium | ✅ Engineered | [View Scenario](./detection-scenarios/scenario6-T1046-network-scan/README.md) |
 | **T1071.001** | C2 Beaconing via Malicious HTTP User Agents | Sysmon ID 3, Suricata IDS | High | ✅ Engineered | [View Scenario](./detection-scenarios/scenario7-T1071.001-c2-beacon/README.md) |
@@ -110,6 +110,7 @@ Written in Python, `elk_discord_alerter.py` continuously polls the Elastic Secur
 soc-detection-lab/
 ├── README.md                          ← This file
 ├── architecture.png                   ← Lab network diagram
+├── cloud-architecture.png             ← Lab cloud architecture diagram
 ├── detection-scenarios/               ← Attack execution and detection logic
 │   ├── scenario1-T1059.001-powershell/
 │   ├── scenario2-T1003.001-lsass/
@@ -118,7 +119,11 @@ soc-detection-lab/
 │   ├── scenario5-T1055.001-dll-injection/
 │   ├── scenario6-T1046-network-scan/
 │   ├── scenario7-T1071.001-c2-beacon/
-│   └── scenario7-T1071.001-c2-beacon/
+│   ├── scenario8-T1078.004-root-login/
+│   ├── scenario9-T1078.004-iam-recon/
+│   ├── scenario10-T1098-iam-persistence/
+│   ├── scenario11-T1530-s3-exfiltration/
+│   └── scenario12-T1537-s3-public-bucket/
 ├── queries/                           ← Exported KQL detection rules (.ndjson)
 │   ├── T1003.001-lsass-access.ndjson
 │   ├── T1046-network-scan-suricata.ndjson
@@ -128,6 +133,11 @@ soc-detection-lab/
 │   ├── T1059.001-encoded-powershell.ndjson
 │   ├── T1071.001-malicious-user-agent.ndjson
 │   ├── T1071.001-suspicious-script-egress.ndjson
+│   ├── T1078.004-root-console-login.ndjson
+│   ├── T1078.004-iam-recon-burst.ndjson
+│   ├── T1098-iam-persistence.ndjson
+│   ├── T1530-s3-bulk-download.ndjson
+│   ├── T1537-s3-public-bucket.ndjson
 │   └── T1078.004-root-console-login.ndjson
 ├── threat-hunting/                    ← Proactive hunt reports and methodology
 │   ├── README.md

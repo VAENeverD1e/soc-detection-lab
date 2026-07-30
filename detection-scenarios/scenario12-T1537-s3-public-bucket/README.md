@@ -45,7 +45,7 @@ state, not assumed successful from a 200 response alone.
 | event.action                          | PutBucketPolicy                         |
 | event.provider                        | s3.amazonaws.com                        |
 | aws.cloudtrail.request_parameters     | Principal: "*", Action: s3:GetObject    |
-| ELK Alert                             | Rule fired within 20 minutes     |
+| ELK Alert                             | Rule fired within 4 minutes     |
 
 ## Detection rule (KQL)
 ```
@@ -72,7 +72,7 @@ account.
 ## Detection score
 > **Detected** — CloudTrail captured the PutBucketPolicy event
 > with a public Principal, and the custom ELK rule generated a
-> High severity alert within 20 minutes. The bucket policy
+> High severity alert within 4 minutes. The bucket policy
 > was reverted and Block Public Access re-enabled immediately
 > after confirmation, verified via a subsequent
 > get-bucket-policy-status error.

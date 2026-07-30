@@ -43,7 +43,7 @@ investigate without treating every login app as an incident.
 | Sysmon Event ID 13  | reg.exe wrote to HKCU\...\CurrentVersion\Run         |
 | registry.path       | ...\Run\Atomic Red Team                              |
 | registry.value      | cmd.exe command set as persistence payload           |
-| ELK Alert           | Rule fired within 5 min of execution                 |
+| ELK Alert           | Rule fired within 1 min of execution                 |
 
 ## Detection rule (KQL)
 ```
@@ -59,7 +59,7 @@ NOT process.name: ("MsMpEng.exe" OR "svchost.exe" OR "OneDrive.exe")
 
 ## Detection score
 > **Detected** — Sysmon Event ID 13 captured the registry write and
-> the custom ELK rule generated a Medium severity alert within 5 min.
+> the custom ELK rule generated a Medium severity alert within 1 min.
 
 ## Cleanup
 ```powershell

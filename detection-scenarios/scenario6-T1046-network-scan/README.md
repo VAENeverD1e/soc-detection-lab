@@ -52,7 +52,7 @@ This is defence-in-depth detection in practice.
 | rule.name                 | ET SCAN signature from Emerging Threats rules |
 | source_ip                 | 192.168.75.12 (FLARE-VM attacker)             |
 | destination_ip            | 192.168.75.11 (ELK server target)             |
-| ELK Alert                 | Rule fired within 5 min of scan               |
+| ELK Alert                 | Rule fired within 4 mins of scan               |
 
 ## Detection rule (KQL)
 ```
@@ -72,7 +72,7 @@ Detection Strategy Note: This rule is intentionally broad and omits source IP ad
 ## Detection score
 > **Detected** — both Sysmon Event ID 1 (endpoint) and Suricata IDS
 > (network) independently captured the scan. The ELK rule generated
-> a Medium severity alert within 5 minutes of execution.
+> a Medium severity alert within 4 minutes of execution.
 
 ## References
 - https://attack.mitre.org/techniques/T1046/

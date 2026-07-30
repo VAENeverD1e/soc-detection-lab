@@ -1,14 +1,14 @@
 # Scenario 10 — T1098: IAM Persistence via Backdoor Admin User
 
 ## Overview
-| Field        | Value                                              |
-|--------------|-----------------------------------------------------|
-| Technique    | T1098 — Account Manipulation                        |
+| Field        | Value                                                     |
+|--------------|-----------------------------------------------------------|
+| Technique    | T1098 — Account Manipulation                              |
 | Simulation   | AWS CLI — CreateUser → AttachUserPolicy → CreateAccessKey |
-| Internet     | Required (AWS API calls)                             |
-| CloudTrail   | CreateUser, AttachUserPolicy, CreateAccessKey        |
-| Severity     | High                                                 |
-| Result       | ✅ Detected                                         |
+| Internet     | Required (AWS API calls)                                  |
+| CloudTrail   | CreateUser, AttachUserPolicy, CreateAccessKey             |
+| Severity     | High                                                      |
+| Result       | ✅ Detected                                               |
 
 ## What the attack does
 Once an adversary has valid credentials with IAM write access,
@@ -25,9 +25,7 @@ of the console entirely.
 ```bash
 aws iam create-user --user-name backup-svc-acct
 
-aws iam attach-user-policy \
-  --user-name backup-svc-acct \
-  --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
+aws iam attach-user-policy --user-name backup-svc-acct --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
 
 aws iam create-access-key --user-name backup-svc-acct
 ```
@@ -35,13 +33,13 @@ Proof of execution: 3 chained CloudTrail events for
 backup-svc-acct within 1 second of each other.
 
 ## Detection signals observed
-| Signal                              | Details                                |
-|--------------------------------------|-----------------------------------------|
-| event.provider                      | iam.amazonaws.com                       |
+| Signal                              | Details                                       |
+|-------------------------------------|-----------------------------------------------|
+| event.provider                      | iam.amazonaws.com                             |
 | event.action (×3)                   | CreateUser, AttachUserPolicy, CreateAccessKey |
-| Target user                         | backup-svc-acct                         |
-| Policy attached                     | AdministratorAccess                     |
-| ELK Alert                           | Rule fired within 30 minutes     |
+| Target user                         | backup-svc-acct                               |
+| Policy attached                     | AdministratorAccess                           |
+| ELK Alert                           | Rule fired within 11 minutes                  |
 
 ## Detection rule (KQL)
 ```
@@ -65,7 +63,7 @@ deleted, so cleanup is a 4-step sequence rather than the 2-step
 version in the original phase plan:
 ```bash
 aws iam list-access-keys --user-name backup-svc-acct
-aws iam delete-access-key --user-name backup-svc-acct --access-key-id 
+aws iam delete-access-key --user-name backup-svc-acct --access-key-id <AccessKeyId>
 aws iam detach-user-policy --user-name backup-svc-acct --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
 aws iam delete-user --user-name backup-svc-acct
 
@@ -83,7 +81,7 @@ aws iam get-user --user-name backup-svc-acct
 ## Detection score
 > **Detected** — CloudTrail captured the full CreateUser →
 > AttachUserPolicy → CreateAccessKey chain, and the custom ELK
-> rule generated a High severity alert within [fill in] minutes.
+> rule generated a High severity alert within 11 minutes.
 > Full cleanup verified via NoSuchEntity on get-user.
 
 ## References

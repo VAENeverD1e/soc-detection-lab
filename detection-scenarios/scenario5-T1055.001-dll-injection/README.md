@@ -41,20 +41,7 @@ space after the sleep was introduced.
 | Signal            | Details                                                          |
 |-------------------|------------------------------------------------------------------|
 | Sysmon Event ID 1 | mavinject.exe spawned by powershell.exe with /INJECTRUNNING arg  |
-| ELK Alert         | Rule fired within 5 min of execution                             |
-
-### Why there is no Event ID 8
-
-Sysmon Event ID 8 (CreateRemoteThread) was **not observed** and will
-never fire for mavinject.exe. Despite being an injector, mavinject
-internally calls `NtCreateThreadEx` — an undocumented ntdll syscall —
-directly, bypassing the `CreateRemoteThread` Win32 API that Sysmon hooks
-for Event ID 8. This is one of the reasons mavinject is a useful LOLBin
-for attackers: it evades the most common thread-injection detection
-mechanism while remaining a signed, trusted Microsoft binary.
-
-Event ID 1 on process creation is therefore the correct and sufficient
-detection artifact for this technique.
+| ELK Alert         | Rule fired within 5 mins of execution                             |
 
 ## Detection rule (KQL)
 

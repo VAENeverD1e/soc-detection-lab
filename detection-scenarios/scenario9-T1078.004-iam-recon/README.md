@@ -31,7 +31,7 @@ aws iam list-attached-user-policies --user-name lab-attacker
 aws iam get-account-summary
 ```
 Proof of execution: 5 CloudTrail events recorded from the
-lab-attacker identity within 21 seconds of each other.
+lab-attacker identity within 1 second of each other.
 
 ## Detection signals observed
 | Signal                              | Details                                 |
@@ -39,8 +39,8 @@ lab-attacker identity within 21 seconds of each other.
 | event.provider                      | iam.amazonaws.com                       |
 | event.action                        | 5 distinct read actions                 |
 | aws.cloudtrail.user_identity.arn    | lab-attacker                            |
-| Burst window                        | 21 seconds, 5 calls                     |
-| ELK Alert                           | Rule fired within 2 minutes             |
+| Burst window                        | 1 second, 5 calls                       |
+| ELK Alert                           | Rule fired within 5 minutes             |
 
 ## Detection rule (KQL)
 ```
@@ -80,7 +80,7 @@ would self-alert on the SIEM's own plumbing.
 > **Detected** — CloudTrail captured all 5 IAM read calls from
 > the lab-attacker identity within a 21-second window, and
 > the custom ELK rule generated a Medium severity alert within
-> 2 minutes.
+> 5 minutes.
 
 ## References
 - https://attack.mitre.org/techniques/T1078/004/

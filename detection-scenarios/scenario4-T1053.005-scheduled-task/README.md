@@ -7,7 +7,6 @@
 | Atomic test  | Test #1 — Scheduled Task Startup Script            |
 | Internet     | Not required                                       |
 | Sysmon event | Event ID 1 (Process Creation — schtasks.exe)       |
-| Windows event| Event ID 4698 (Scheduled task created)             |
 | Severity     | High                                               |
 | Result       | ✅ Detected                                        |
 
@@ -34,23 +33,10 @@ Get-ScheduledTask | Where-Object {$_.TaskName -like "*T1053*"} |
   Select-Object TaskName, State
 ```
 
-## Two independent log sources caught this attack
-This scenario is notable because two completely separate logging
-pipelines both captured the same technique:
-
-1. **Sysmon Event ID 1** — caught schtasks.exe being spawned with
-   /create flags, visible in process.command_line
-2. **Windows Security Event 4698** — a native Windows audit event
-   fired independently of Sysmon, recording the task name and action
-
-Having two independent signals increases detection reliability —
-if one logging pipeline fails, the other still catches it.
-
 ## Detection signals observed
 | Signal                  | Details                                         |
 |-------------------------|-------------------------------------------------|
 | Sysmon Event ID 1       | schtasks.exe /create /sc onlogon + /sc onstart  |
-| Windows Event ID 4698   | "A scheduled task was created" — both task names|
 | ELK Alert               | Rule fired twice (once per task created)         |
 
 ## Detection rule (KQL)
@@ -64,13 +50,12 @@ NOT process.parent.name: ("svchost.exe" OR "taskhostw.exe")
 ## Evidence
 ![Test execution + Task Scheduler](../../screenshots/scenario4-atomic-execution-tasks.png)
 ![Kibana Sysmon Event ID 1](../../screenshots/scenario4-kibana-sysmon-event1.png)
-![Kibana Windows Event 4698](../../screenshots/scenario4-kibana-event-4698.png)
 ![ELK alert fired](../../screenshots/scenario4-elk-alert-fired.png)
 
 ## Detection score
-> **Detected** — Both Sysmon Event ID 1 and Windows Security Event
-> 4698 logged the attack. The custom ELK rule generated two High
-> severity alerts (one per task) within 5 minutes of execution.
+> **Detected** — Sysmon Event ID 1 logged the attack. The custom ELK 
+> rule generated two High severity alerts (one per task) 
+> within 2 minutes of execution.
 
 ## Cleanup
 ```powershell

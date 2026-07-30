@@ -1,12 +1,12 @@
 # Scenario 11 — T1530: S3 Data Exfiltration (Bulk Download)
 
 ## Overview
-| Field        | Value                                              |
+| Field        | Value                                               |
 |--------------|-----------------------------------------------------|
 | Technique    | T1530 — Data from Cloud Storage                     |
 | Simulation   | AWS CLI — aws s3 sync bulk download                 |
-| Internet     | Required (AWS API calls)                             |
-| CloudTrail   | GetObject (data event, not a management event)       |
+| Internet     | Required (AWS API calls)                            |
+| CloudTrail   | GetObject (data event, not a management event)      |
 | Severity     | High                                                |
 | Result       | ✅ Detected                                         |
 
@@ -41,15 +41,15 @@ for ($i = 1; $i -le 25; $i++) {
 aws s3 sync s3://soclab-exfil-test-/ ./exfil-test/
 ```
 Proof of execution: 25 GetObject events recorded from a single
-source.ip within almost 0 second of each other.
+source.ip within almost 1 second of each other.
 
 ## Detection signals observed
-| Signal                              | Details                                |
-|--------------------------------------|-----------------------------------------|
+| Signal                              | Details                                 |
+|-------------------------------------|-----------------------------------------|
 | event.action                        | GetObject ×25                           |
 | source.ip                           | single origin, all 25 calls             |
-| Burst window                        | almost 0 second                      |
-| ELK Alert                           | Rule fired within 50 minutes     |
+| Burst window                        | almost 1 second                         |
+| ELK Alert                           | Rule fired within 10 minutes            |
 
 ## Detection rule (Threshold, not custom query)
 ```
@@ -79,16 +79,16 @@ recon detection, implemented here in full.
 > **Detected** — 25 GetObject calls from a single source were
 > captured once the data event selector was enabled, and the
 > Threshold rule generated a High severity alert within
-> 50 minutes once the count crossed 20 events in 5 minutes.
+> 10 minutes once the count crossed 20 events in 5 minutes.
 
 ## Cleanup
 ```bash
 # Remove the data event selector via the CloudTrail console
 # (Trails → your trail → Data events → remove selector)
 
+Remove-Item -Recurse -Force .\exfil-test
 aws s3 rm s3://soclab-exfil-test- --recursive
 aws s3 rb s3://soclab-exfil-test-
-rm -rf ./exfil-test file*.txt
 ```
 
 ## References
