@@ -1,4 +1,4 @@
-# SOC Detection Lab — Incident Response Playbooks
+# SOC Detection Lab - Incident Response Playbooks
 
 > **Structured triage, escalation, and response procedures for each
 > detection rule in this lab. One playbook per MITRE ATT&CK technique.**
@@ -13,19 +13,19 @@ detection-to-response workflow.
 
 Each playbook covers four areas:
 
-| Section                      | What it answers                                    |
-|------------------------------|----------------------------------------------------|
-| **Triage steps**             | What to look at first, and in what order           |
-| **TP vs FP criteria**        | How to classify the alert and when to escalate     |
+| Section                      | What it answers                                        |
+|------------------------------|--------------------------------------------------------|
+| **Triage steps**             | What to look at first, and in what order               |
+| **TP vs FP criteria**        | How to classify the alert and when to escalate         |
 | **Containment and response** | Concrete actions to take for a confirmed true positive |
-| **Evidence checklist**       | What to collect before taking any remediation action |
+| **Evidence checklist**       | What to collect before taking any remediation action   |
 
 ---
 
 ## Playbook index
 
 | Playbook | Technique | Severity | Primary signal |
-|----------|-----------|----------|----------------|
+| ---------- | ----------- | ---------- | ---------------- |
 | [PB-T1059.001](PB-T1059.001-powershell-fileless.md) | PowerShell Fileless Execution | High | Sysmon ID 1 |
 | [PB-T1003.001](PB-T1003.001-lsass-dump.md) | LSASS Memory Dump | High | Sysmon ID 10 |
 | [PB-T1547.001](PB-T1547.001-run-key-persistence.md) | Registry Run Key Persistence | Medium | Sysmon ID 13 |
@@ -42,16 +42,16 @@ Not all alerts carry equal urgency. Use this triage order when multiple
 alerts fire simultaneously:
 
 ```
-PRIORITY 1 — Active intrusion indicators (respond within minutes)
+PRIORITY 1 - Active intrusion indicators (respond within minutes)
   T1071.001  C2 Beaconing          ← host is already compromised
   T1003.001  LSASS Dump            ← credentials likely extracted
 
-PRIORITY 2 — Persistence and privilege escalation (respond within the hour)
+PRIORITY 2 - Persistence and privilege escalation (respond within the hour)
   T1055.001  DLL Injection         ← code executing inside trusted process
   T1053.005  Scheduled Task        ← attacker ensuring reboot survival
   T1547.001  Registry Run Key      ← attacker ensuring reboot survival
 
-PRIORITY 3 — Reconnaissance and execution (investigate same day)
+PRIORITY 3 - Reconnaissance and execution (investigate same day)
   T1059.001  Encoded PowerShell    ← may be initial access or lateral move
   T1046      Network Scan          ← pre-attack mapping, no exploit yet
 ```
@@ -64,11 +64,11 @@ PRIORITY 3 — Reconnaissance and execution (investigate same day)
 the rule name and open the corresponding playbook.
 
 **Step 2:** Work through the **Triage steps** in order. Do not skip to
-containment before completing triage — premature action can destroy
+containment before completing triage - premature action can destroy
 forensic evidence and tip off the attacker.
 
 **Step 3:** Apply the **TP vs FP criteria** to classify the alert.
-If uncertain, treat as TP and escalate — the cost of a missed true
+If uncertain, treat as TP and escalate - the cost of a missed true
 positive exceeds the cost of a false positive investigation.
 
 **Step 4:** Complete the **Evidence checklist** before taking any
@@ -82,6 +82,7 @@ recovered after host isolation or re-imaging.
 ## Cross-references
 
 Each playbook links back to:
+
 - The detection scenario README (how the attack was simulated)
 - The relevant threat hunt reports (gap analysis that shaped the rules)
 - The KQL rule (`.ndjson` for Kibana import)
